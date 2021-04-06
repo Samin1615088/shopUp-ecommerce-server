@@ -28,6 +28,24 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     const productsCollection = client.db(dbName).collection("products");
     console.log('mongodb connection established');
+
+    //get allProducts from mongo and serve client>>
+    app.get('/allproducts', (req, res) => {
+        console.log('request client->server* for ALLPRODUCTS');
+
+        //mongodb>
+        productsCollection.find({})
+            .toArray()
+            .then( documents => {
+                console.log('all Products', documents);
+                res.send(documents);
+            })
+            .catch(error => console.log('error', error))
+        //mongodb<
+    })
+    //get allProducts from mongo and serve client<<
+
+
 });
 //mongodb code<< <<
 
