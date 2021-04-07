@@ -47,6 +47,23 @@ client.connect(err => {
     })
     //get allProducts from mongo and serve client<<
 
+    //get singleProduct using _id from mongo and serve client>>
+    app.get('/product/:id', (req, res) => {
+        console.log('request client->server* for SINGLEPRODUCT');
+        const id = ObjectID(req.params.id)
+        console.log(id);
+        //mongodb>
+        productsCollection.find({_id: id})
+            .toArray()
+            .then(documents => {
+                console.log('single Product', documents[0]);
+                res.send(documents[0]);
+            })
+            .catch(error => console.log('error', error))
+        //mongodb<
+    })
+    //get allProducts from mongo and serve client<<
+
     //addProduct from client->server*->mongo >>
     app.post('/addProduct', (req, res) => {
         console.log('request client->server* for ADD-PRODUCT');
@@ -68,7 +85,7 @@ client.connect(err => {
     app.delete('/deleteProduct/:id', (req, res) => {
         console.log('request client->server* for DELETE-ONE-PRODUCT');
         console.log("product id to delete", req.params.id);
-        const id = {_id: ObjectID(req.params.id)};
+        const id = { _id: ObjectID(req.params.id) };
 
         //mongodb>
         productsCollection.deleteOne(id)
