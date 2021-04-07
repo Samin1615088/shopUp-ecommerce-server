@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
+const ObjectID = require('mongodb').ObjectID;
 
 
 const app = express();
@@ -27,6 +28,7 @@ const uri = `mongodb+srv://${dbUser}:${dbPass}@cluster0.bcrd2.mongodb.net/${dbNa
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const productsCollection = client.db(dbName).collection("products");
+    const ordersCollection = client.db(dbName).collection("orders");
     console.log('mongodb connection established');
 
     //get allProducts from mongo and serve client>>
@@ -36,7 +38,7 @@ client.connect(err => {
         //mongodb>
         productsCollection.find({})
             .toArray()
-            .then( documents => {
+            .then(documents => {
                 console.log('all Products', documents);
                 res.send(documents);
             })
@@ -45,6 +47,39 @@ client.connect(err => {
     })
     //get allProducts from mongo and serve client<<
 
+    //addProduct from client->server*->mongo >>
+    app.post('/addProduct', (req, res) => {
+        console.log('request client->server* for ADD-PRODUCT');
+        console.log("req.body ", req.body);
+        const product = req.body;
+
+        //mongodb>
+        productsCollection
+            .insertOne(product)
+            .then(result => {
+                console.log(result);
+                res.send(result.insertedCount > 0);
+            })
+        //mongodb<
+    })
+    //get allProducts from mongo and serve client<<
+
+    //deleteProduct from client->server*->mongo >>
+    app.delete('/deleteProduct/:id', (req, res) => {
+        console.log('request client->server* for DELETE-ONE-PRODUCT');
+        console.log("product id to delete", req.params.id);
+        const id = {_id: ObjectID(req.params.id)};
+
+        //mongodb>
+        productsCollection.deleteOne(id)
+            .then(result => {
+                console.log(result);
+                res.send(result.deletedCount > 0);
+            });
+
+        //mongodb<
+    })
+    //get allProducts from mongo and serve client<<
 
 });
 //mongodb code<< <<
