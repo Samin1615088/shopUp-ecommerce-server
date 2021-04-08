@@ -108,7 +108,8 @@ client.connect(err => {
             .insertOne(orderedProduct)
             .then(result => {
                 console.log(result);
-                res.send(result.insertedCount > 0);
+                res.redirect('/');
+                // res.send(result.insertedCount > 0);
             })
         //mongodb<
     })
