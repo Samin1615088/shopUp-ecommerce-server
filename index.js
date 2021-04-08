@@ -86,6 +86,7 @@ client.connect(err => {
         console.log("req.body ", req.body);
         const product = req.body;
 
+
         //mongodb>
         productsCollection
             .insertOne(product)
