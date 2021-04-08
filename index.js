@@ -47,13 +47,29 @@ client.connect(err => {
     })
     //get allProducts from mongo and serve client<<
 
+    //get allOrders from mongo and serve client using user email>>
+    app.get('/orders/:email', (req, res) => {
+        console.log('request client->server* for ALLORDERS');
+        const email = req.params.email;
+        //mongodb>
+        ordersCollection.find({email})
+        .toArray()
+        .then(documents => {
+            console.log('all Orders', documents);
+            res.send(documents);
+        })
+        .catch(error => console.log('error', error))
+        //mongodb<
+    })
+    //get allOrders from mongo and serve client using user email<<
+
     //get singleProduct using _id from mongo and serve client>>
     app.get('/product/:id', (req, res) => {
         console.log('request client->server* for SINGLEPRODUCT');
         const id = ObjectID(req.params.id)
         console.log(id);
         //mongodb>
-        productsCollection.find({_id: id})
+        productsCollection.find({ _id: id })
             .toArray()
             .then(documents => {
                 console.log('single Product', documents[0]);
@@ -79,7 +95,24 @@ client.connect(err => {
             })
         //mongodb<
     })
-    //get allProducts from mongo and serve client<<
+    //addProduct from client->server*->mongo <<
+
+    //addProduct in Order from client->server*->mongo >>
+    app.post('/placeorder', (req, res) => {
+        console.log('request client->server* for ADD-PRODUCT in Order');
+        console.log("req.body ", req.body);
+        const orderedProduct = req.body;
+
+        //mongodb>
+        ordersCollection
+            .insertOne(orderedProduct)
+            .then(result => {
+                console.log(result);
+                res.send(result.insertedCount > 0);
+            })
+        //mongodb<
+    })
+    //addProduct in Order from client->server*->mongo <<
 
     //deleteProduct from client->server*->mongo >>
     app.delete('/deleteProduct/:id', (req, res) => {
