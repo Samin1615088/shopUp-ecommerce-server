@@ -1,4 +1,4 @@
-# ShopUp E-commerce Website
+# ShopUp E-commerce Website-Server
 This is a ecommerce website where daily groceries can be bought and new products can be enlisted.<br/>
 
 
