@@ -1,4 +1,4 @@
-# ShopUp E-commerce Website-Server
+# ShopUp E-commerce Website-Backend
 This is a ecommerce website where daily groceries can be bought and new products can be enlisted.<br/>
 
 
@@ -14,7 +14,7 @@ Frontend github: [Code Link](https://github.com/Samin1615088/shopUp-ecommerce)
 
 Backend github: [Code Link](https://github.com/Samin1615088/shopUp-ecommerce-server)
 
-Demo Heroku [Heroku Link](https://blooming-tundra-01056.herokuapp.com/)
+Backend Live [Heroku Link](https://blooming-tundra-01056.herokuapp.com/)
 
 
 
@@ -28,6 +28,5 @@ Demo Heroku [Heroku Link](https://blooming-tundra-01056.herokuapp.com/)
 ###  Backend
 
 `EXPRESS.JS`  `NODE.JS`  `MONGODB ATLAS DATABASE`  `BODY-PARSER`  `FIREBASE AUTHENTICATION`  `HEROKU HOSTING`  `FIREBASE HOSTING`
-
 
 # full-stack-server-Samin1615088
